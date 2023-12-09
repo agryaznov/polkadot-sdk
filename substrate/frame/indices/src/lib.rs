@@ -292,9 +292,11 @@ pub mod pallet {
 	impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
 		#[cfg(feature = "try-runtime")]
 		fn try_state(_: BlockNumberFor<T>) -> Result<(), TryRuntimeError> {
+			use sp_core::hexdisplay::HexDisplay;
+
 			log::info!(target: LOG_TARGET, "--------------- INDICES: --------------");
 			for (k, v) in <Accounts<T>>::iter() {
-				log::info!(target: LOG_TARGET, "Index {:?} belongs to {:?}", k, v.0.to_string());
+				log::info!(target: LOG_TARGET, "Index {:?} belongs to {:?}", k, HexDisplay::from(&v.0.encode());
 			}
 			Ok(())
 		}
