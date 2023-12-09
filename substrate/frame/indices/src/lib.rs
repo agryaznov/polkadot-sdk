@@ -40,6 +40,13 @@ type AccountIdLookupOf<T> = <<T as frame_system::Config>::Lookup as StaticLookup
 
 pub use pallet::*;
 
+/// The target that is used for the log output emitted by this crate.
+///
+/// Hence you can use this target to selectively increase the log level for this crate.
+///
+/// Example: `RUST_LOG=runtime::contracts=debug my_code --dev`
+const LOG_TARGET: &str = "runtime::indices";
+
 #[frame_support::pallet]
 pub mod pallet {
 	use super::*;
@@ -274,6 +281,15 @@ pub mod pallet {
 			for (a, b) in &self.indices {
 				<Accounts<T>>::insert(a, (b, <BalanceOf<T>>::zero(), false))
 			}
+		}
+	}
+
+	#[cfg(feature = "try-runtime")]
+	#[pallet::hooks]
+	fn try_state(_: BlockNumber) -> Result<(), TryRuntimeError> {
+		log::info!(target: LOG_TARGET, "--------------- INDICES: --------------");
+		for (k,v) in Accounts::<T>::iter() {
+			log::info!(target: LOG_TARGET, "Index {k} belongs to {:?}", k, v.0.to_string());
 		}
 	}
 }
