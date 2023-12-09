@@ -294,7 +294,7 @@ pub mod pallet {
 		fn try_state(_: BlockNumberFor<T>) -> Result<(), TryRuntimeError> {
 			log::info!(target: LOG_TARGET, "--------------- INDICES: --------------");
 			for (k, v) in <Accounts<T>>::iter() {
-				log::info!(target: LOG_TARGET, "Index {k} belongs to {:?}", k, v.0.to_string());
+				log::info!(target: LOG_TARGET, "Index {:?} belongs to {:?}", k, v.0.to_string());
 			}
 			Ok(())
 		}
