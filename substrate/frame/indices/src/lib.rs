@@ -296,6 +296,7 @@ pub mod pallet {
 			for (k, v) in <Accounts<T>>::iter() {
 				log::info!(target: LOG_TARGET, "Index {k} belongs to {:?}", k, v.0.to_string());
 			}
+			Ok()
 		}
 	}
 }
