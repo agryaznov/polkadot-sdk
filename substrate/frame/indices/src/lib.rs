@@ -299,7 +299,7 @@ impl<T: Config> Pallet<T> {
 
 	/// Lookup an T::AccountIndex to get an Id, if there's one there.
 	pub fn lookup_index(index: T::AccountIndex) -> Option<T::AccountId> {
-		Accounts::<T>::get(index).map(|x| x.0)
+		<Accounts<T>>::get(index).map(|x| x.0)
 	}
 
 	/// Lookup an address to get an Id, if there's one there.
