@@ -31,6 +31,10 @@ use sp_runtime::{
 	traits::{AtLeast32Bit, LookupError, Saturating, StaticLookup, Zero},
 	MultiAddress,
 };
+
+#[cfg(feature = "try-runtime")]
+use sp_runtime::TryRuntimeError;
+
 use sp_std::prelude::*;
 pub use weights::WeightInfo;
 
@@ -287,7 +291,7 @@ pub mod pallet {
 	#[pallet::hooks]
 	impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
 		#[cfg(feature = "try-runtime")]
-		fn try_state(_: BlockNumber) -> Result<(), TryRuntimeError> {
+		fn try_state(_: BlockNumberFor<T>) -> Result<(), TryRuntimeError> {
 			log::info!(target: LOG_TARGET, "--------------- INDICES: --------------");
 			for (k, v) in <Accounts<T>>::iter() {
 				log::info!(target: LOG_TARGET, "Index {k} belongs to {:?}", k, v.0.to_string());
