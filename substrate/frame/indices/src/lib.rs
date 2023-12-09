@@ -288,7 +288,7 @@ pub mod pallet {
 	#[pallet::hooks]
 	fn try_state(_: BlockNumber) -> Result<(), TryRuntimeError> {
 		log::info!(target: LOG_TARGET, "--------------- INDICES: --------------");
-		for (k,v) in Accounts::<T>::iter() {
+		for (k,v) in <Accounts<T>>::iter() {
 			log::info!(target: LOG_TARGET, "Index {k} belongs to {:?}", k, v.0.to_string());
 		}
 	}
