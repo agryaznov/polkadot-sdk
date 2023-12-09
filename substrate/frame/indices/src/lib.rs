@@ -286,10 +286,12 @@ pub mod pallet {
 
 	#[cfg(feature = "try-runtime")]
 	#[pallet::hooks]
-	fn try_state(_: BlockNumber) -> Result<(), TryRuntimeError> {
-		log::info!(target: LOG_TARGET, "--------------- INDICES: --------------");
-		for (k,v) in <Accounts<T>>::iter() {
-			log::info!(target: LOG_TARGET, "Index {k} belongs to {:?}", k, v.0.to_string());
+	impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
+		fn try_state(_: BlockNumber) -> Result<(), TryRuntimeError> {
+			log::info!(target: LOG_TARGET, "--------------- INDICES: --------------");
+			for (k,v) in <Accounts<T>>::iter() {
+				log::info!(target: LOG_TARGET, "Index {k} belongs to {:?}", k, v.0.to_string());
+			}
 		}
 	}
 }
