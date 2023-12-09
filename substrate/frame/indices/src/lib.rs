@@ -296,7 +296,7 @@ pub mod pallet {
 
 			log::info!(target: LOG_TARGET, "--------------- INDICES: --------------");
 			for (k, v) in <Accounts<T>>::iter() {
-				log::info!(target: LOG_TARGET, "Index {:?} belongs to {:?}", k, HexDisplay::from(&v.0.encode());
+				log::info!(target: LOG_TARGET, "Index {:?} belongs to {:?}", k, HexDisplay::from(&v.0.encode()));
 			}
 			Ok(())
 		}
