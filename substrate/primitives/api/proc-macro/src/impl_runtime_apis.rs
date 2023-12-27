@@ -105,9 +105,12 @@ fn generate_impl_call(
 			#let_binding =
 				match #c::DecodeLimit::decode_all_with_depth_limit(
 					#c::MAX_EXTRINSIC_DEPTH,
-					&mut #input,
+					&mut #input.clone(),
 				) {
-					Ok(res) => res,
+					Ok(res) => {
+				        log::error!(target: "runtime", "RUNTIME-delivered EXTRINSIC: {:02x?}", #input);
+						res
+					},
 					Err(e) => panic!("Bad input data: {:02x?} provided to {}: {}", #input, #fn_name_str, e),
 				};
 		)

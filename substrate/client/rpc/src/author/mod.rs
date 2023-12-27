@@ -194,6 +194,8 @@ where
 			},
 		};
 
+        log::error!(target: "author_submitExtrinsic", "ENCODED EXTRINSIC: {:?}", &dxt);
+
 		let submit = self
 			.pool
 			.submit_and_watch(&generic::BlockId::hash(best_block_hash), TX_SOURCE, dxt)
