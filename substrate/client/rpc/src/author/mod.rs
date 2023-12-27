@@ -97,6 +97,9 @@ where
 			Err(err) => return Err(Error::Client(Box::new(err)).into()),
 		};
 		let best_block_hash = self.client.info().best_hash;
+
+        log::error!(target: "author_submitExtrinsic", "ENCODED EXTRINSIC: {:?}", &xt);
+
 		self.pool
 			.submit_one(&generic::BlockId::hash(best_block_hash), TX_SOURCE, xt)
 			.await
