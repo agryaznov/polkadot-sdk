@@ -152,7 +152,9 @@ where
 			Some((signed, signature, extra)) => {
 				let signed = lookup.lookup(signed)?;
 				let raw_payload = SignedPayload::new(self.function, extra)?;
-				if !raw_payload.using_encoded(|payload| signature.verify(payload, &signed)) {
+				if !raw_payload.using_encoded(|payload| {
+					log::error!(target: "runtime", "SIG PAYLOAD is: {:02x?}", &payload);
+					signature.verify(payload, &signed)}) {
 					return Err(InvalidTransaction::BadProof.into())
 				}
 
