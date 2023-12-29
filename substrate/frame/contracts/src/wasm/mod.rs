@@ -237,12 +237,17 @@ impl<T: Config> WasmBlob<T> {
 				// the `owner` is always the origin of the current transaction.
 				None => {
 					let deposit = self.code_info.deposit;
+					log::error!(target: LOG_TARGET, "DEPOST= {:?}", &deposit);
+
 					T::Currency::hold(
 						&HoldReason::CodeUploadDepositReserve.into(),
 						&self.code_info.owner,
 						deposit,
 					)
-					.map_err(|_| <Error<T>>::StorageDepositNotEnoughFunds)?;
+						.map_err(|e| {
+							log::error!(target: LOG_TARGET, "YES We FAIL on :Currency::hold() with {:?}", e);
+
+							<Error<T>>::StorageDepositNotEnoughFunds})?;
 
 					self.code_info.refcount = 0;
 					<PristineCode<T>>::insert(code_hash, &self.code);
