@@ -700,8 +700,12 @@ pub mod pallet {
 			data: Vec<u8>,
 		) -> DispatchResultWithPostInfo {
 			Migration::<T>::ensure_migrated()?;
+
+			let origin = Origin::from_runtime_origin(origin)?;
+			log::error!(target: LOG_TARGET, "call() origin: {:?}", &origin);
+
 			let common = CommonInput {
-				origin: Origin::from_runtime_origin(origin)?,
+				origin,
 				value,
 				data,
 				gas_limit: gas_limit.into(),
