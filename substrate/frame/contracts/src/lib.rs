@@ -1139,7 +1139,14 @@ impl<T: Config> Origin<T> {
 		match o.into() {
 			Ok(RawOrigin::Root) => Ok(Self::Root),
 			Ok(RawOrigin::Signed(t)) => Ok(Self::Signed(t)),
-			_ => Err(BadOrigin.into()),
+			Ok(RawOrigin::None) => {
+				log::error!(target: LOG_TARGET, "Origing convertion: RawOrigin::None");
+				Err(BadOrigin.into())
+			},
+			Err(e) => {
+				log::error!(target: LOG_TARGET, "Origing convertion failed!");
+				Err(BadOrigin.into())
+			},
 		}
 	}
 	/// Returns the AccountId of a Signed Origin or an error if the origin is Root.
