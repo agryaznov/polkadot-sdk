@@ -702,7 +702,6 @@ pub mod pallet {
 			Migration::<T>::ensure_migrated()?;
 
 			let origin = Origin::from_runtime_origin(origin)?;
-			log::error!(target: LOG_TARGET, "call() origin: {:?}", &origin);
 
 			let common = CommonInput {
 				origin,
@@ -1445,6 +1444,7 @@ impl<T: Config> Pallet<T> {
 			None
 		};
 		let origin = Origin::from_account_id(origin);
+		log::error!(target: LOG_TARGET, "call() request data: {:?}", &data);
 		let common = CommonInput {
 			origin,
 			value,
@@ -1453,6 +1453,7 @@ impl<T: Config> Pallet<T> {
 			storage_deposit_limit,
 			debug_message: debug_message.as_mut(),
 		};
+
 		let output = CallInput::<T> { dest, determinism }.run_guarded(common);
 		let events = if matches!(collect_events, CollectEvents::UnsafeCollect) {
 			Some(System::<T>::read_events_no_consensus().map(|e| *e).collect())
