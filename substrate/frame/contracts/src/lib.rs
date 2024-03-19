@@ -1140,11 +1140,11 @@ impl<T: Config> Origin<T> {
 			Ok(RawOrigin::Root) => Ok(Self::Root),
 			Ok(RawOrigin::Signed(t)) => Ok(Self::Signed(t)),
 			Ok(RawOrigin::None) => {
-				log::error!(target: LOG_TARGET, "Origing convertion: RawOrigin::None");
+				log::error!(target: LOG_TARGET, "Origin convertion: RawOrigin::None");
 				Err(BadOrigin.into())
 			},
 			Err(e) => {
-				log::error!(target: LOG_TARGET, "Origing convertion failed!");
+				log::error!(target: LOG_TARGET, "Origin convertion failed!");
 				Err(BadOrigin.into())
 			},
 		}
