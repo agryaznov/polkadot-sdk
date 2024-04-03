@@ -98,8 +98,6 @@ where
 		};
 		let best_block_hash = self.client.info().best_hash;
 
-        log::error!(target: "author_submitExtrinsic", "ENCODED EXTRINSIC: {:?}", &xt);
-
 		self.pool
 			.submit_one(&generic::BlockId::hash(best_block_hash), TX_SOURCE, xt)
 			.await
@@ -193,8 +191,6 @@ where
 				return Ok(())
 			},
 		};
-
-        log::error!(target: "author_submitExtrinsic", "ENCODED EXTRINSIC: {:?}", &dxt);
 
 		let submit = self
 			.pool
