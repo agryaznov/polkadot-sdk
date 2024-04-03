@@ -237,7 +237,6 @@ impl<T: Config> WasmBlob<T> {
 				// the `owner` is always the origin of the current transaction.
 				None => {
 					let deposit = self.code_info.deposit;
-					log::error!(target: LOG_TARGET, "DEPOST= {:?}", &deposit);
 
 					T::Currency::hold(
 						&HoldReason::CodeUploadDepositReserve.into(),
