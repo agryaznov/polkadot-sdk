@@ -9358,6 +9358,7 @@ dependencies = [
  "frame-benchmarking",
  "frame-support",
  "frame-system",
+ "hex",
  "impl-trait-for-tuples",
  "log",
  "pallet-balances",

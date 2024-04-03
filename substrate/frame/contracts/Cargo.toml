@@ -48,6 +48,9 @@ sp-io = { path = "../../primitives/io", default-features = false}
 sp-runtime = { path = "../../primitives/runtime", default-features = false}
 sp-std = { path = "../../primitives/std", default-features = false}
 
+# dbg
+hex = { version = "0.4.3", default-features = false, features = ["alloc"] }
+
 [dev-dependencies]
 array-bytes = "6.1"
 assert_matches = "1"

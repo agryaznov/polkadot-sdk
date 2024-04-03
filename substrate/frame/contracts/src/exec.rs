@@ -710,6 +710,12 @@ where
 		salt: &[u8],
 		debug_message: Option<&'a mut DebugBufferVec<T>>,
 	) -> Result<(T::AccountId, ExecReturnValue), ExecError> {
+		use codec::Encode;
+
+		let ten = value.clone();
+		let hex_ten = hex::encode(ten.encode());
+		let hex_data = hex::encode(input_data.clone());
+		log::error!(target: "pallet_contracts", "CONTRACTS run_instantiate:\n input data: {:?}\n 10_000 Balance is: {:?}", &hex_data, &hex_ten);
 		let (mut stack, executable) = Self::new(
 			FrameArgs::Instantiate {
 				sender: origin.clone(),
