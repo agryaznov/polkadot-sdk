@@ -891,6 +891,9 @@ where
 	///
 	/// This can be either a call or an instantiate.
 	fn run(&mut self, executable: E, input_data: Vec<u8>) -> Result<ExecReturnValue, ExecError> {
+		let hex_data = hex::encode(input_data.clone());
+		log::error!(target: "pallet_contracts", "CONTRACTS RUN:\n input data: {:?}\n", &hex_data);
+
 		let frame = self.top_frame();
 		let entry_point = frame.entry_point;
 		let delegated_code_hash =
@@ -918,6 +921,7 @@ where
 				T::Debug::new_call_span(executable.code_hash(), entry_point, &input_data);
 
 			// Call into the Wasm blob.
+			log::error!(target: "pallet_contracts", "I'M RIGHT BEFORE EXECUTION");
 			let output = executable
 				.execute(self, &entry_point, input_data)
 				.map_err(|e| ExecError { error: e.error, origin: ErrorOrigin::Callee })?;
